@@ -9,30 +9,24 @@ module.exports = {
         const techsArray = parseStringAsArray(techs)
 
         const devs = await Dev.find({
-            techs:{
-                $in: techsArray,
+            // Filter by any techs
+            techs: {
+              $in: techsArray,
             },
-            location:{
-                $near:{
-                    $geometry:{
-                        type: 'Point',
-                        coordinates: [longitude, latitude],
-                    },
-                    $maxDistance: 10000,
+            // Find by location
+            location: {
+              $near: {
+                $geometry: {
+                  type: 'Point',
+                  coordinates: [longitude, latitude]
                 },
-            },
-        })
-    
-        return res.json({ devs })
-        
+                // Distance in meters
+                $maxDistance: 10000
+              }
+            }
+          });
+      
+          return res.json({ devs });
+        }
 
-    },
-
-    async update(req, res){
-
-    },
-
-    async delete(req, res){
-
-    }
 }
